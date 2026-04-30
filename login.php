@@ -32,7 +32,7 @@ require_once 'db.php'; // Traemos el código del otro archivo
         if($verify){
             session_start();
             $_SESSION['username'] = $usuario['email']; // Store session data
-            $_SESSION['id_usuario'] = $usuario['id_usurio'];
+            $_SESSION['id_usuario'] = $usuario['id_usuario'];
             header("Location: dashboard.php");
             
         }else{
