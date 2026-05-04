@@ -26,6 +26,3 @@ function conectarDB() {
         die("Error de conexión: " . $e->getMessage());
     }
 }
-
-
-?>

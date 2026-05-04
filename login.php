@@ -1,66 +1,55 @@
 <?php
 
-// index.php
 require_once 'db.php'; // Traemos el código del otro archivo
 
-
-
 //  Obtenemos los datos del formulario
-     $email  = $_POST['email'];
-     $pwd = $_POST['pwd'];
-     
-     // Llamamos a la función y guardamos el objeto en $db
-     $db = conectarDB();
-      
+$email  = $_POST['email'];
+$pwd = $_POST['pwd'];
 
-  try {
-  
+// Verificamos que los datos no estén vacíos
+if (empty($email) || empty($pwd)) {
+    echo "Por favor, complete todos los campos.";
+    exit();
+}
 
+// Verificamos que el email tenga un formato válido
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo "Por favor, ingrese un email válido.";
+    exit();
+}
 
-        $sql = "select id_usuario,password,email from usuarios where email= :email";
-        $query = $db->prepare($sql);
+// Llamamos a la función y guardamos el objeto en $db
+$db = conectarDB();
 
-	
+try {
 
-        // Ejecutamos pasando los datos en un array
-        $resultado = $query->execute([
-            'email'  => $email
-        ]);
-        $usuario = $query->fetch(PDO::FETCH_ASSOC);
-        if($usuario){
-        $verify = password_verify($pwd, $usuario['password']);
-        if($verify){
-            session_start();
-            $_SESSION['username'] = $usuario['email']; // Store session data
-            $_SESSION['id_usuario'] = $usuario['id_usuario'];
-            header("Location: dashboard.php");
-            
-        }else{
-            echo "La contraseña esta mal...";
-        }
-        
-        
-        }else{
-            echo "No se encontraron datos!";
-        }
+    $sql = "select id_usuario,password,email from usuarios where email= :email";
+    $query = $db->prepare($sql);
 
-        
+    // Ejecutamos pasando los datos en un array
+    $resultado = $query->execute([
+        'email'  => $email
+    ]);
 
-        
+    $usuario = $query->fetch(PDO::FETCH_ASSOC);
 
-        
-
-    } catch (PDOException $e) {
-        // Manejo de errores (ej. si el email ya existe y es único)
-        echo "Database Error: " . $e->getMessage();
-
-        
-     
+    if (!$usuario) {
+        echo "No se encontraron datos!";
+        exit();
     }
 
+    $verify = password_verify($pwd, $usuario['password']);
 
+    if (!$verify) {
+        echo "No se encontraron datos!";
+        exit();
+    }
 
-
-
-
-?>
+    session_start();
+    $_SESSION['username'] = $usuario['email']; // Store session data
+    $_SESSION['id_usuario'] = $usuario['id_usuario'];
+    header("Location: dashboard.php");
+} catch (PDOException $e) {
+    // Manejo de errores (ej. si el email ya existe y es único)
+    echo "Database Error: " . $e->getMessage();
+}
