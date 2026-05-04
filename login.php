@@ -49,5 +49,5 @@ try {
 
     echo json_encode(['success' => true, 'redirect' => 'dashboard.php']);
 } catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => 'Database Error']);
+    echo json_encode(['success' => false, 'message' => 'Database Error', 'error' => $e->getMessage()]);
 }
