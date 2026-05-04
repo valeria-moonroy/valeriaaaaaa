@@ -4,12 +4,10 @@ $(document).ready(function() {
 	* evento onclick 
 	*/
     $('.nav-link').on('click', function() {
-        
         /*
 		* A todos los elementos que tienen la clase nav-link
 		* quitarle la clase llamada active
 		*/
-
         $('.nav-link').removeClass('active');
 		// Finalmente al elemento que le dan clic agregarle la clase active
         $(this).addClass('active');
@@ -17,13 +15,42 @@ $(document).ready(function() {
     });
 });
 
+function mostrarError(selector, mensaje) {
+    const alertBox = $(selector);
+    if (mensaje) {
+        alertBox.text(mensaje).removeClass('d-none');
+    } else {
+        alertBox.text('').addClass('d-none');
+    }
+}
+
+function validarCampos(campos) {
+    for (let i = 0; i < campos.length; i++) {
+        const campo = campos[i];
+        if (!campo.element.val().trim()) {
+            mostrarError(campo.errorSelector, campo.message);
+            campo.element.focus();
+            return false;
+        }
+    }
+    return true;
+}
+
 function registroUsuarios(){
 	let name = $("#nombre");
 	let email = $("#email");
 	let password = $("#pwd");
-	 // Recopilar datos de un formulario para enviarlos a un servidor.
+
+	if (!validarCampos([
+	    { element: name, errorSelector: '#registroError', message: 'Complete el nombre completo.' },
+	    { element: email, errorSelector: '#registroError', message: 'Complete el email.' },
+	    { element: password, errorSelector: '#registroError', message: 'Complete la contraseña.' }
+	])) {
+	    return;
+	}
+
+	mostrarError('#registroError', '');
 	let formData = new FormData();
-	
 	formData.append("nombre", name.val());
 	formData.append("email", email.val());
 	formData.append("pwd", password.val());
@@ -34,23 +61,28 @@ function registroUsuarios(){
 		type: "POST",
 		cache: false,		
 		success: function(result){			
-			$('#main').html(result);		    
+			$('#main').html(result); 	    
 		},
 		error: function (xhr, status) {
 
 		}
-	       });
-
+	});
 }
 
 function login(){
-	
 	let email = $("#email");
 	let password = $("#pwd");
-	 // Recopilar datos de un formulario para enviarlos a un servidor.
+
+	// Si algún campo está vacio mostrar el mensaje de error y regresar sin hacer nada más
+	if (!validarCampos([
+	    { element: email, errorSelector: '#loginError', message: 'Complete el email.' },
+	    { element: password, errorSelector: '#loginError', message: 'Complete la contraseña.' }
+	])) {
+	    return;
+	}
+
+	mostrarError('#loginError', '');
 	let formData = new FormData();
-	
-	
 	formData.append("email", email.val());
 	formData.append("pwd", password.val());
 	$.ajax({url: "login.php",
@@ -60,14 +92,10 @@ function login(){
 		type: "POST",
 		cache: false,		
 		success: function(result){
-			
 			$('#main').html(result);
-		    //alert("El registro de ha completado correctamente!");
 		},
 		error: function (xhr, status) {
-
 		}
-	       });
-
+	});
 }
 
