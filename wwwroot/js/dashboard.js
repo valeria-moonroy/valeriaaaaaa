@@ -1,12 +1,12 @@
 // dashboard.js - Funciones específicas del dashboard
 
 $(document).ready(function() {
-    if ($('#dashboardContent').length) {
-        loadDashboardStats();
-    }
+    loadDashboardStats();
 });
 
 function loadDashboardStats() {
+    console.log('Cargando estadísticas del dashboard...');
+    console.log('Elementos encontrados - Autores:', $('#totalAuthors').length, 'Libros:', $('#totalBooks').length, 'Préstamos:', $('#activeLoans').length);
     // Cargar estadísticas del dashboard
     $.ajax({
         url: 'autores_api.php',
@@ -14,8 +14,15 @@ function loadDashboardStats() {
         dataType: 'json',
         success: function(result) {
             if (result.success && result.authors) {
-                $('#totalAuthors').text(result.authors.length);
+                const count = result.authors.length;
+                $('#totalAuthors').text(count);
+                console.log('Autores cargados:', count);
+            } else {
+                console.error('Error cargando autores:', result.message);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error AJAX autores:', status, error);
         }
     });
 
@@ -25,8 +32,15 @@ function loadDashboardStats() {
         dataType: 'json',
         success: function(result) {
             if (result.success && result.books) {
-                $('#totalBooks').text(result.books.length);
+                const count = result.books.length;
+                $('#totalBooks').text(count);
+                console.log('Libros cargados:', count);
+            } else {
+                console.error('Error cargando libros:', result.message);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error AJAX libros:', status, error);
         }
     });
 
@@ -38,7 +52,13 @@ function loadDashboardStats() {
             if (result.success && result.loans) {
                 const activeLoans = result.loans.filter(loan => !loan.fecha_devolucion).length;
                 $('#activeLoans').text(activeLoans);
+                console.log('Préstamos activos:', activeLoans);
+            } else {
+                console.error('Error cargando préstamos:', result.message);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error AJAX préstamos:', status, error);
         }
     });
 }

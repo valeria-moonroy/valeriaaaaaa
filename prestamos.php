@@ -3,92 +3,235 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gestión de Préstamos - Biblioteca</title>
+    <title>Gestión de Préstamos - Biblioteca Digital 2026</title>
     <link href="./wwwroot/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./wwwroot/css/bootstrap-icons.min.css">
+    <style>
+      .navbar-brand {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+      }
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      }
+      .btn-modern {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-modern:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+      .nav-link {
+        border-radius: 8px;
+        margin-bottom: 0.25rem;
+        transition: all 0.2s ease;
+      }
+      .nav-link:hover {
+        background-color: rgba(102, 126, 234, 0.1);
+        transform: translateX(5px);
+      }
+      .btn-return {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        border: none;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+      .btn-return:hover {
+        transform: scale(1.05);
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.4);
+      }
+      @media (max-width: 767.98px) {
+        .navbar-nav {
+          position: fixed;
+          top: 56px;
+          left: -100%;
+          width: 280px;
+          height: calc(100vh - 56px);
+          background: white;
+          z-index: 1050;
+          transition: left 0.3s ease;
+          padding: 1rem;
+        }
+        .navbar-nav.show {
+          left: 0;
+        }
+        .navbar-backdrop {
+          position: fixed;
+          top: 56px;
+          left: 0;
+          width: 100%;
+          height: calc(100vh - 56px);
+          background: rgba(0,0,0,0.5);
+          z-index: 1040;
+          display: none;
+        }
+        .navbar-backdrop.show {
+          display: block;
+        }
+      }
+    </style>
     <script src="./wwwroot/js/jquery-4.0.0.min.js"></script>
     <script src="./wwwroot/js/prestamos.js"></script>
   </head>
-  <body>
-    <header>
-      <div class="px-3 py-2 text-bg-primary border-bottom">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="dashboard.php" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-              <i class="bi bi-book-half fw-bold fs-5 pe-2"></i> Biblioteca
-            </a>
-            <nav class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-              <a href="dashboard.php" class="nav-link text-white">
-                <i class="bi bi-house-door pe-1"></i> Dashboard
+  <body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow-sm">
+      <div class="container-fluid">
+        <button class="navbar-toggler d-lg-none me-2" type="button" id="navbarToggle">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand fs-4" href="dashboard.php">
+          <i class="bi bi-book-half me-2"></i>Biblioteca Digital 2026
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+          <a href="logout.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i>Salir
+          </a>
+        </div>
+        <div class="collapse navbar-collapse d-none d-lg-block">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.php">
+                <i class="bi bi-house-door me-1"></i>Dashboard
               </a>
-              <a href="autores.php" class="nav-link text-white">
-                <i class="bi bi-people-fill pe-1"></i> Autores
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="autores.php">
+                <i class="bi bi-people-fill me-1"></i>Autores
               </a>
-              <a href="libros.php" class="nav-link text-white">
-                <i class="bi bi-book-fill pe-1"></i> Libros
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="libros.php">
+                <i class="bi bi-book-fill me-1"></i>Libros
               </a>
-              <a href="prestamos.php" class="nav-link text-white active">
-                <i class="bi bi-journal-bookmark-fill pe-1"></i> Préstamos
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="prestamos.php">
+                <i class="bi bi-journal-bookmark-fill me-1"></i>Préstamos
               </a>
-              <a href="logout.php" class="nav-link text-danger">
-                <i class="bi bi-box-arrow-right pe-1"></i> Salir
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link text-danger" href="logout.php">
+                <i class="bi bi-box-arrow-right me-1"></i>Salir
               </a>
-            </nav>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </header>
+    </nav>
 
-    <main class="container py-4">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h1 class="h2">Gestión de Préstamos</h1>
-          <p class="text-muted mb-0">Usuario: <strong id="userName">-</strong></p>
-        </div>
-      </div>
+    <!-- Navbar Backdrop para móviles -->
+    <div class="navbar-backdrop" id="navbarBackdrop"></div>
 
-      <div id="dashboardMessage" class="alert d-none" role="alert"></div>
+    <!-- Navbar Móvil -->
+    <nav class="navbar-nav d-lg-none" id="mobileNav">
+      <a class="nav-link mb-2" href="dashboard.php">
+        <i class="bi bi-house-door me-2"></i>Dashboard
+      </a>
+      <a class="nav-link mb-2" href="autores.php">
+        <i class="bi bi-people-fill me-2"></i>Autores
+      </a>
+      <a class="nav-link mb-2" href="libros.php">
+        <i class="bi bi-book-fill me-2"></i>Libros
+      </a>
+      <a class="nav-link active mb-2" href="prestamos.php">
+        <i class="bi bi-journal-bookmark-fill me-2"></i>Préstamos
+      </a>
+      <hr>
+      <a class="nav-link text-danger" href="logout.php">
+        <i class="bi bi-box-arrow-right me-2"></i>Salir
+      </a>
+    </nav>
 
-      <div class="row gy-4">
-        <div class="col-lg-5">
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <strong>Nuevo Préstamo</strong>
+    <!-- Contenido Principal -->
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 class="h2 fw-bold text-primary mb-1">
+                <i class="bi bi-journal-bookmark-fill me-2"></i>Sistema de Préstamos
+              </h1>
+              <p class="text-muted mb-0">Controla préstamos y devoluciones de libros</p>
             </div>
-            <div class="card-body">
-              <div id="loansError" class="alert alert-danger d-none" role="alert"></div>
-              <div class="mb-3">
-                <label for="loanBook" class="form-label">Libro disponible</label>
-                <select id="loanBook" class="form-select">
-                  <option value="">Selecciona un libro disponible</option>
-                </select>
+            <div class="d-none d-md-block">
+              <small class="text-muted"><?php echo date('d/m/Y H:i'); ?></small>
+            </div>
+          </div>
+
+          <div id="dashboardMessage" class="alert d-none" role="alert"></div>
+
+          <div class="row g-4">
+            <!-- Formulario Nuevo Préstamo -->
+            <div class="col-lg-5">
+              <div class="card card-hover border-0 shadow-sm">
+                <div class="card-header text-white" style="background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);">
+                  <h5 class="mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>Nuevo Préstamo
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="loansError" class="alert alert-danger d-none" role="alert"></div>
+                  <div class="mb-3">
+                    <label for="loanBook" class="form-label fw-semibold">Libro Disponible</label>
+                    <select id="loanBook" class="form-select form-select-lg">
+                      <option value="">Cargando libros...</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-modern w-100" onclick="createLoan()">
+                    <i class="bi bi-check-circle me-2"></i>Prestar Libro
+                  </button>
+                </div>
               </div>
-              <button type="button" class="btn btn-primary" onclick="createLoan()">Prestar libro</button>
             </div>
-          </div>
-        </div>
-        <div class="col-lg-7">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <strong>Mis Préstamos</strong>
-              <button class="btn btn-sm btn-outline-secondary" type="button" onclick="loadLoans()">Actualizar</button>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-striped table-hover mb-0" id="loansTable">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Libro</th>
-                    <th>Autor</th>
-                    <th>Inicio</th>
-                    <th>Devolución</th>
-                    <th>Acción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td colspan="6" class="text-center text-muted">Cargando préstamos...</td></tr>
-                </tbody>
-              </table>
+
+            <!-- Lista de Préstamos -->
+            <div class="col-lg-7">
+              <div class="card card-hover border-0 shadow-sm">
+                <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">
+                    <i class="bi bi-list-ul me-2"></i>Mis Préstamos
+                  </h5>
+                  <button class="btn btn-outline-light btn-sm" type="button" onclick="loadLoans()">
+                    <i class="bi bi-arrow-clockwise me-1"></i>Actualizar
+                  </button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="loansTable">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="border-0 fw-semibold">ID</th>
+                          <th class="border-0 fw-semibold">Libro</th>
+                          <th class="border-0 fw-semibold">Autor</th>
+                          <th class="border-0 fw-semibold">Inicio</th>
+                          <th class="border-0 fw-semibold">Devolución</th>
+                          <th class="border-0 fw-semibold">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td colspan="6" class="text-center text-muted py-4">
+                            <i class="bi bi-hourglass-split me-2"></i>Cargando préstamos...
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -96,8 +239,15 @@
     </main>
 
     <script>
-      $(document).ready(function() {
-        loadLoans();
+      // Toggle navbar móvil
+      document.getElementById('navbarToggle').addEventListener('click', function() {
+        document.getElementById('mobileNav').classList.toggle('show');
+        document.getElementById('navbarBackdrop').classList.toggle('show');
+      });
+
+      document.getElementById('navbarBackdrop').addEventListener('click', function() {
+        document.getElementById('mobileNav').classList.remove('show');
+        this.classList.remove('show');
       });
     </script>
     <script src="./wwwroot/js/bootstrap.bundle.min.js"></script>

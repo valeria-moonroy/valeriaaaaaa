@@ -4,6 +4,8 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once 'db.php';
 
+session_start();
+
 $db = conectarDB();
 
 $method = $_SERVER['REQUEST_METHOD'];

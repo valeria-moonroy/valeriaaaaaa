@@ -3,94 +3,233 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gestión de Libros - Biblioteca</title>
+    <title>Gestión de Libros - Biblioteca Digital 2026</title>
     <link href="./wwwroot/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./wwwroot/css/bootstrap-icons.min.css">
+    <style>
+      .navbar-brand {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+      }
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      }
+      .btn-modern {
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .btn-modern:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+      .nav-link {
+        border-radius: 8px;
+        margin-bottom: 0.25rem;
+        transition: all 0.2s ease;
+      }
+      .nav-link:hover {
+        background-color: rgba(102, 126, 234, 0.1);
+        transform: translateX(5px);
+      }
+      .badge-available {
+        background: linear-gradient(45deg, #28a745, #20c997);
+      }
+      .badge-unavailable {
+        background: linear-gradient(45deg, #dc3545, #fd7e14);
+      }
+      @media (max-width: 767.98px) {
+        .navbar-nav {
+          position: fixed;
+          top: 56px;
+          left: -100%;
+          width: 280px;
+          height: calc(100vh - 56px);
+          background: white;
+          z-index: 1050;
+          transition: left 0.3s ease;
+          padding: 1rem;
+        }
+        .navbar-nav.show {
+          left: 0;
+        }
+        .navbar-backdrop {
+          position: fixed;
+          top: 56px;
+          left: 0;
+          width: 100%;
+          height: calc(100vh - 56px);
+          background: rgba(0,0,0,0.5);
+          z-index: 1040;
+          display: none;
+        }
+        .navbar-backdrop.show {
+          display: block;
+        }
+      }
+    </style>
     <script src="./wwwroot/js/jquery-4.0.0.min.js"></script>
     <script src="./wwwroot/js/libros.js"></script>
   </head>
-  <body>
-    <header>
-      <div class="px-3 py-2 text-bg-primary border-bottom">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="dashboard.php" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-              <i class="bi bi-book-half fw-bold fs-5 pe-2"></i> Biblioteca
-            </a>
-            <nav class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-              <a href="dashboard.php" class="nav-link text-white">
-                <i class="bi bi-house-door pe-1"></i> Dashboard
+  <body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient shadow-sm">
+      <div class="container-fluid">
+        <button class="navbar-toggler d-lg-none me-2" type="button" id="navbarToggle">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand fs-4" href="dashboard.php">
+          <i class="bi bi-book-half me-2"></i>Biblioteca Digital 2026
+        </a>
+        <div class="d-flex align-items-center d-lg-none">
+          <a href="logout.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i>Salir
+          </a>
+        </div>
+        <div class="collapse navbar-collapse d-none d-lg-block">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.php">
+                <i class="bi bi-house-door me-1"></i>Dashboard
               </a>
-              <a href="autores.php" class="nav-link text-white">
-                <i class="bi bi-people-fill pe-1"></i> Autores
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="autores.php">
+                <i class="bi bi-people-fill me-1"></i>Autores
               </a>
-              <a href="libros.php" class="nav-link text-white active">
-                <i class="bi bi-book-fill pe-1"></i> Libros
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="libros.php">
+                <i class="bi bi-book-fill me-1"></i>Libros
               </a>
-              <a href="prestamos.php" class="nav-link text-white">
-                <i class="bi bi-journal-bookmark-fill pe-1"></i> Préstamos
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="prestamos.php">
+                <i class="bi bi-journal-bookmark-fill me-1"></i>Préstamos
               </a>
-              <a href="logout.php" class="nav-link text-danger">
-                <i class="bi bi-box-arrow-right pe-1"></i> Salir
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link text-danger" href="logout.php">
+                <i class="bi bi-box-arrow-right me-1"></i>Salir
               </a>
-            </nav>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </header>
+    </nav>
 
-    <main class="container py-4">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h1 class="h2">Gestión de Libros</h1>
-          <p class="text-muted mb-0">Usuario: <strong id="userName">-</strong></p>
-        </div>
-      </div>
+    <!-- Navbar Backdrop para móviles -->
+    <div class="navbar-backdrop" id="navbarBackdrop"></div>
 
-      <div id="dashboardMessage" class="alert d-none" role="alert"></div>
+    <!-- Navbar Móvil -->
+    <nav class="navbar-nav d-lg-none" id="mobileNav">
+      <a class="nav-link mb-2" href="dashboard.php">
+        <i class="bi bi-house-door me-2"></i>Dashboard
+      </a>
+      <a class="nav-link mb-2" href="autores.php">
+        <i class="bi bi-people-fill me-2"></i>Autores
+      </a>
+      <a class="nav-link active mb-2" href="libros.php">
+        <i class="bi bi-book-fill me-2"></i>Libros
+      </a>
+      <a class="nav-link mb-2" href="prestamos.php">
+        <i class="bi bi-journal-bookmark-fill me-2"></i>Préstamos
+      </a>
+      <hr>
+      <a class="nav-link text-danger" href="logout.php">
+        <i class="bi bi-box-arrow-right me-2"></i>Salir
+      </a>
+    </nav>
 
-      <div class="row gy-4">
-        <div class="col-lg-5">
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <strong>Agregar Libro</strong>
+    <!-- Contenido Principal -->
+    <main class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 class="h2 fw-bold text-primary mb-1">
+                <i class="bi bi-book-fill me-2"></i>Catálogo de Libros
+              </h1>
+              <p class="text-muted mb-0">Gestiona tu colección de libros y su disponibilidad</p>
             </div>
-            <div class="card-body">
-              <div id="booksError" class="alert alert-danger d-none" role="alert"></div>
-              <div class="mb-3">
-                <label for="bookName" class="form-label">Título del libro</label>
-                <input type="text" id="bookName" class="form-control" placeholder="Nombre del libro" autocomplete="off">
-              </div>
-              <div class="mb-3">
-                <label for="bookAuthor" class="form-label">Autor</label>
-                <select id="bookAuthor" class="form-select">
-                  <option value="">Selecciona un autor</option>
-                </select>
-              </div>
-              <button type="button" class="btn btn-primary" onclick="createBook()">Guardar libro</button>
+            <div class="d-none d-md-block">
+              <small class="text-muted"><?php echo date('d/m/Y H:i'); ?></small>
             </div>
           </div>
-        </div>
-        <div class="col-lg-7">
-          <div class="card shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <strong>Lista de Libros</strong>
-              <button class="btn btn-sm btn-outline-secondary" type="button" onclick="loadBooks()">Actualizar</button>
+
+          <div id="dashboardMessage" class="alert d-none" role="alert"></div>
+
+          <div class="row g-4">
+            <!-- Formulario Agregar Libro -->
+            <div class="col-lg-5">
+              <div class="card card-hover border-0 shadow-sm">
+                <div class="card-header text-white" style="background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);">
+                  <h5 class="mb-0">
+                    <i class="bi bi-plus-circle me-2"></i>Agregar Nuevo Libro
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div id="booksError" class="alert alert-danger d-none" role="alert"></div>
+                  <div class="mb-3">
+                    <label for="bookName" class="form-label fw-semibold">Título del Libro</label>
+                    <input type="text" id="bookName" class="form-control form-control-lg" placeholder="Ingrese el título del libro" autocomplete="off">
+                  </div>
+                  <div class="mb-3">
+                    <label for="bookAuthor" class="form-label fw-semibold">Autor</label>
+                    <select id="bookAuthor" class="form-select form-select-lg">
+                      <option value="">Cargando autores...</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-modern w-100" onclick="createBook()">
+                    <i class="bi bi-check-circle me-2"></i>Guardar Libro
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="table-responsive">
-              <table class="table table-striped table-hover mb-0" id="booksTable">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Libro</th>
-                    <th>Autor</th>
-                    <th>Disponible</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td colspan="4" class="text-center text-muted">Cargando libros...</td></tr>
-                </tbody>
-              </table>
+
+            <!-- Lista de Libros -->
+            <div class="col-lg-7">
+              <div class="card card-hover border-0 shadow-sm">
+                <div class="card-header bg-gradient text-white d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">
+                    <i class="bi bi-list-ul me-2"></i>Lista de Libros
+                  </h5>
+                  <button class="btn btn-outline-light btn-sm" type="button" onclick="loadBooks()">
+                    <i class="bi bi-arrow-clockwise me-1"></i>Actualizar
+                  </button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="booksTable">
+                      <thead class="table-light">
+                        <tr>
+                          <th class="border-0 fw-semibold">ID</th>
+                          <th class="border-0 fw-semibold">Libro</th>
+                          <th class="border-0 fw-semibold">Autor</th>
+                          <th class="border-0 fw-semibold">Disponible</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td colspan="4" class="text-center text-muted py-4">
+                            <i class="bi bi-hourglass-split me-2"></i>Cargando libros...
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -98,8 +237,15 @@
     </main>
 
     <script>
-      $(document).ready(function() {
-        loadBooks();
+      // Toggle navbar móvil
+      document.getElementById('navbarToggle').addEventListener('click', function() {
+        document.getElementById('mobileNav').classList.toggle('show');
+        document.getElementById('navbarBackdrop').classList.toggle('show');
+      });
+
+      document.getElementById('navbarBackdrop').addEventListener('click', function() {
+        document.getElementById('mobileNav').classList.remove('show');
+        this.classList.remove('show');
       });
     </script>
     <script src="./wwwroot/js/bootstrap.bundle.min.js"></script>

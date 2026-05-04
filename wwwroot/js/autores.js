@@ -3,7 +3,6 @@
 $(document).ready(function() {
     // Cargar datos iniciales
     loadAuthors();
-    loadUserInfo();
 });
 
 function mostrarError(selector, mensaje) {
@@ -36,12 +35,6 @@ function validarCampos(campos) {
         }
     }
     return true;
-}
-
-function loadUserInfo() {
-    // Cargar información del usuario desde sessionStorage o hacer una petición
-    const userName = sessionStorage.getItem('userName') || 'Usuario';
-    $('#userName').text(userName);
 }
 
 function loadAuthors() {
