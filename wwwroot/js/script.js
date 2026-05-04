@@ -59,12 +59,17 @@ function registroUsuarios(){
 		processData: false,
 		contentType: false,
 		type: "POST",
+		dataType: 'json',
 		cache: false,		
 		success: function(result){			
-			$('#main').html(result); 	    
+			if (!result.success) {
+			    mostrarError('#registroError', result.message || 'Error en el registro.');
+			    return;
+			}
+			window.location.href = result.redirect || 'index.html';
 		},
 		error: function (xhr, status) {
-
+			mostrarError('#registroError', 'Error de conexión. Intente de nuevo.');
 		}
 	});
 }
@@ -90,11 +95,17 @@ function login(){
 		processData: false,
 		contentType: false,
 		type: "POST",
+		dataType: 'json',
 		cache: false,		
 		success: function(result){
-			$('#main').html(result);
+			if (!result.success) {
+			    mostrarError('#loginError', result.message || 'Email o contraseña incorrectos.');
+			    return;
+			}
+			window.location.href = result.redirect || 'dashboard.php';
 		},
 		error: function (xhr, status) {
+			mostrarError('#loginError', 'Error de conexión. Intente de nuevo.');
 		}
 	});
 }
