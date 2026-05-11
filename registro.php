@@ -1,7 +1,7 @@
 <?php
 require_once 'auth_helper.php';
-if(!isAuthenticated()) {
-    header("Location: index.php");
+if(isAuthenticated()) {
+    header("Location: dashboard.php");
     exit();
 }
 ?>
