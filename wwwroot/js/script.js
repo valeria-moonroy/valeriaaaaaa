@@ -64,7 +64,7 @@ function registroUsuarios(){
                 mostrarError('#registroError', result.message || 'Error en el registro.');
                 return;
             }
-            window.location.href = result.redirect || 'index.html';
+            window.location.href = result.redirect || 'index.php';
         },
         error: function (xhr, status) {
             mostrarError('#registroError', 'Error de conexión. Intente de nuevo.');

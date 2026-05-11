@@ -1,3 +1,10 @@
+<?php
+require_once 'auth_helper.php';
+if(!isAuthenticated()) {
+    header("Location: index.php");
+    exit();
+}
+?>
 <!doctype html>
 <html lang="es">
   <head>

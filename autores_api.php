@@ -23,7 +23,9 @@ if ($method === 'GET') {
     }
     exit();
 } elseif ($method === 'POST') {
-    // Crear nuevo autor
+    // Crear nuevo autor 
+    // Usamos la funcion trim para eliminar espacios en blanco al inicio y al final del nombre del autor
+    // Ejemplo: " Gabriel García Márquez " se convierte en "Gabriel García Márquez"
     $nombre = trim($_POST['nombre'] ?? '');
 
     if (empty($nombre)) {
@@ -34,6 +36,8 @@ if ($method === 'GET') {
     try {
         $sql = "INSERT INTO autores (nombre) VALUES (:nombre)";
         $query = $db->prepare($sql);
+        // Sanitizamos para evitar inyecciones SQL, aunque el uso de prepared statements ya ayuda a prevenir esto.
+        // Ejemplo: Si el usuario ingresa "Gabriel García Márquez; DROP TABLE autores;", el prepared statement tratará todo como un valor de texto, evitando la ejecución de comandos maliciosos.
         $resultado = $query->execute(['nombre' => $nombre]);
 
         if ($resultado) {

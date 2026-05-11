@@ -1,3 +1,10 @@
+<?php
+require_once 'auth_helper.php';
+if(!isAuthenticated()) {
+    header("Location: index.php");
+    exit();
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -37,7 +44,7 @@
                 <div class="d-flex justify-content-between py-3">
                   <div>
                     <span class="small text-muted">¿Ya tienes cuenta?</span>
-                    <a class="small" href="index.html"> Iniciar sesión</a>
+                    <a class="small" href="index.php"> Iniciar sesión</a>
                   </div>
                   <button type="button" class="btn btn-outline-primary" onclick="registroUsuarios();"> Registrarse</button>
                 </div>

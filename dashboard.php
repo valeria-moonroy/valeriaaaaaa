@@ -1,9 +1,7 @@
 <?php
-session_start();
-
-// ¿Existe la sesión? Si no, fuera de aquí.
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: index.html");
+require_once 'auth_helper.php';
+if(!isAuthenticated()) {
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -16,6 +14,7 @@ if (!isset($_SESSION['id_usuario'])) {
     <link href="./wwwroot/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./wwwroot/css/bootstrap-icons.min.css">
     <style>
+      /* Estilos desde tailwindcss.com con un toque personalizado */
       .navbar-brand {
         background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
         -webkit-background-clip: text;

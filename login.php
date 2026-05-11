@@ -47,6 +47,12 @@ try {
     $_SESSION['username'] = $usuario['email'];
     $_SESSION['id_usuario'] = $usuario['id_usuario'];
 
+    // Agregar una cookie para mantener la sesión solo por 60 minutos
+    $cookieName = "id_usuario";
+    $cookieValue = $usuario['id_usuario'];
+    $sesionExpiraEn = time() + (60 * 60); // 60 minutos
+    setcookie($cookieName, $cookieValue, $sesionExpiraEn, "/", "", false, true); // HttpOnly para mayor seguridad
+
     echo json_encode(['success' => true, 'redirect' => 'dashboard.php']);
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database Error', 'error' => $e->getMessage()]);

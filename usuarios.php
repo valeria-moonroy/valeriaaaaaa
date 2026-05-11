@@ -21,7 +21,7 @@ try {
     ]);
 
     if ($resultado) {
-        echo json_encode(['success' => true, 'redirect' => 'index.html']);
+        echo json_encode(['success' => true, 'redirect' => 'index.php']);
         exit();
     }
 } catch (PDOException $e) {
